@@ -69,11 +69,18 @@ public class Engine implements Runnable{
 			while(!firstBlock.equals(lastBlock)){
 				Future<Block> future = peer.getBlock(firstBlock);
 				Block block = future.get();
+				
+//				if(!block.getHashAsString().equalsIgnoreCase("000000000000000000226e620adb988fc544c989d761119d2a9a485706cd6e69")) {
+//					firstBlock = block.getPrevBlockHash();					
+//					// Skip the blocks that throw the "com.google.bitcoin.core.ProtocolException: No magic bytes+header after reading 65536 bytes" exception.
+//					firstBlock = skipDangerousBlock(firstBlock);
+//					System.out.println("Skipping: " + block.getHashAsString());
+//					continue;
+//				}
 //				System.out.println("Analysing block with hash: " + block.getHashAsString());
 				
 				List<Transaction> listTx = block.getTransactions();
 				for(Transaction tx : listTx){
-
 					
 					// Checking transaction
 					ExplorerTransaction optx = new ExplorerTransaction(block, tx); 
@@ -82,6 +89,19 @@ public class Engine implements Runnable{
 						// Adding block
 						ExplorerBlock tempBlock = new ExplorerBlock(block.getHashAsString(), block.getTime());
 						blocks.add(tempBlock);
+						
+//						if(optx.getSender() == null) {
+//							System.out.print(block.getHashAsString() + " - " + optx.getTxHash() + " - " + optx.getSender() + " -> " + optx.getReference());
+//						} else {
+//						
+//							if(optx.getSender().isP2SHAddress()) {
+//								System.out.print(block.getHashAsString() + " - " + optx.getTxHash() + " - " + optx.getSender() + " -> " + optx.getReference());
+//							}
+//						
+//						}
+						
+//						System.out.print(block.getHashAsString() + " - " + optx.getTxHash() + " - " + optx.getSender() + " -> " + optx.getReference() + " - ");
+//						System.out.println(optx.getTetherAmount());
 						
 						// Adding transaction
 						optx.setTxHash(tx.getHashAsString());
@@ -96,54 +116,60 @@ public class Engine implements Runnable{
 	
 				// Skip the blocks that throw the "com.google.bitcoin.core.ProtocolException: No magic bytes+header after reading 65536 bytes" exception.
 				firstBlock = skipDangerousBlock(firstBlock);
+				
+//				break;
 			}			
 				
 				
-			// Writing data on db
-			try (Connection con = ds.getConnection()){
-					
-				// Writing blocks
-				for(ExplorerBlock b : blocks){
-//					System.out.println("Adding block " +  b.getBlockHash());
-					String stringLock = "LOCK TABLE explorer.block WRITE;"; 
-					String stringBlock = "INSERT IGNORE INTO explorer.block (blockHash, timestamp) VALUES (?,?); ";
-					String stringUnlock = "UNLOCK TABLE;";
-
-					PreparedStatement statementLock = con.prepareStatement(stringLock);
-					PreparedStatement statementBlock = con.prepareStatement(stringBlock);
-					PreparedStatement statementUnlock = con.prepareStatement(stringUnlock);
-					statementBlock.setString(1, b.getBlockHash());
-					statementBlock.setString(2, b.getBlockDate());
-					statementLock.execute();
-					statementBlock.executeUpdate();
-					statementUnlock.execute();
-				}
-
-				// Writing transactions
-				for(ExplorerTransaction t : transactions){
-//					System.out.println("Adding transaction " +  t.getTxHash());
-					String stringLock = "LOCK TABLE explorer." + t.getProtocol() + "transactions WRITE;";
-					String stringTx = 
-							"INSERT IGNORE INTO explorer." + t.getProtocol() + "transactions " +
-							"(transactionHash, block, opreturn) " +
-							"VALUES (?, ?, ?);";
-					String stringUnlock = "UNLOCK TABLE";
-					
-					PreparedStatement statementLock = con.prepareStatement(stringLock);
-					PreparedStatement statementTx = con.prepareStatement(stringTx);
-					PreparedStatement statementUnlock = con.prepareStatement(stringUnlock);
-					
-					statementTx.setString(1, t.getTxHash());
-					statementTx.setString(2, t.getBlockHash());
-					statementTx.setString(3, t.getData());
-					
-					statementLock.execute();
-					statementTx.executeUpdate();
-					statementUnlock.execute();
-				}
-			} catch(SQLException e){
-				e.printStackTrace();
-			}
+//			// Writing data on db
+//			try (Connection con = ds.getConnection()){
+//					
+//				// Writing blocks
+//				for(ExplorerBlock b : blocks){
+////					System.out.println("Adding block " +  b.getBlockHash());
+//					String stringLock = "LOCK TABLE explorer.block WRITE;"; 
+//					String stringBlock = "INSERT IGNORE INTO explorer.block (blockHash, timestamp) VALUES (?,?); ";
+//					String stringUnlock = "UNLOCK TABLE;";
+//
+//					PreparedStatement statementLock = con.prepareStatement(stringLock);
+//					PreparedStatement statementBlock = con.prepareStatement(stringBlock);
+//					PreparedStatement statementUnlock = con.prepareStatement(stringUnlock);
+//					statementBlock.setString(1, b.getBlockHash());
+//					statementBlock.setString(2, b.getBlockDate());
+//					statementLock.execute();
+//					statementBlock.executeUpdate();
+//					statementUnlock.execute();
+//				}
+//
+//				// Writing transactions
+//				for(ExplorerTransaction t : transactions){
+////					System.out.println("Adding transaction " +  t.getTxHash());
+//					String stringLock = "LOCK TABLE explorer." + t.getProtocol() + "transactions WRITE;";
+//					String stringTx = 
+//							"INSERT IGNORE INTO explorer." + t.getProtocol() + "transactions " +
+//							"(transactionHash, block, opreturn, sending_address, reference_address, amount) " +
+//							"VALUES (?, ?, ?, ?,?,?);";
+//					String stringUnlock = "UNLOCK TABLE";
+//					
+//					PreparedStatement statementLock = con.prepareStatement(stringLock);
+//					PreparedStatement statementTx = con.prepareStatement(stringTx);
+//					PreparedStatement statementUnlock = con.prepareStatement(stringUnlock);
+//					
+//					statementTx.setString(1, t.getTxHash());
+//					statementTx.setString(2, t.getBlockHash());
+//					statementTx.setString(3, t.getData());
+//					
+//					statementTx.setString(4, t.getSender() != null ? t.getSender().toString() : null);
+//					statementTx.setString(5, t.getReference() != null ? t.getReference().toString() : null);
+//					statementTx.setDouble(6, t.getTetherAmount());
+//					
+//					statementLock.execute();
+//					statementTx.executeUpdate();
+//					statementUnlock.execute();
+//				}
+//			} catch(SQLException e){
+//				e.printStackTrace();
+//			}
 			
 			System.out.println("Thread " + CODE + ": closing Bitcoin connection");
 	

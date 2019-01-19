@@ -12,6 +12,7 @@
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <junit.jupiter.version>5.3.2</junit.jupiter.version>
   </properties>
 
   <dependencies>
@@ -19,23 +20,91 @@
     <dependency>
       <groupId>org.bitcoinj</groupId>
       <artifactId>bitcoinj-core</artifactId>
-      <version>0.14.3</version>
+      <version>0.14.7</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
-      <version>2.5.1</version>
+      <version>3.2.0</version>
     </dependency>
 
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>6.0.5</version>
+      <version>8.0.13</version>
     </dependency>
+    
+<!--  	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-simple</artifactId>
+	    <version>1.7.25</version>
+	</dependency> -->
+	
+	<!-- GOOGLE APIS -->
+	<dependency>
+	    <groupId>com.google.api-client</groupId>
+	    <artifactId>google-api-client</artifactId>
+	    <version>1.27.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.google.oauth-client</groupId>
+	    <artifactId>google-oauth-client-jetty</artifactId>
+	    <version>1.27.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.google.apis</groupId>
+	    <artifactId>google-api-services-sheets</artifactId>
+	    <version>v4-rev553-1.25.0</version>
+	</dependency>
+	
+	<!-- JUNIT -->
+ 	<dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter-api</artifactId>
+		<version>${junit.jupiter.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter-params</artifactId>
+		<version>${junit.jupiter.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter-engine</artifactId>
+		<version>${junit.jupiter.version}</version>
+		<scope>test</scope>
+	</dependency>
+	
+<!-- 	<dependency>
+	  <groupId>junit</groupId>
+	  <artifactId>junit</artifactId>
+	  <version>4.12</version>
+	  <scope>test</scope>
+	</dependency> -->
+	
+<!-- 	<dependency>
+	    <groupId>org.hamcrest</groupId>
+	    <artifactId>hamcrest-library</artifactId>
+	    <version>2.1</version>
+	    <scope>test</scope>
+	</dependency> -->
 
   </dependencies>
+  
+<!-- 	<build>
+		<plugins>
+			JUnit 5 requires Surefire version 2.22.1 or higher
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+			</plugin>
+		</plugins>
+	</build> -->
+  
   <groupId>bitcoinExplorer</groupId>
   <version>1.0</version>
 </project>

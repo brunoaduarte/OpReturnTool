@@ -98,9 +98,12 @@ public class MainEngine {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception{
 		
+        System.out.println("Updating 'input.txt': " + new Timestamp(new java.util.Date().getTime()));
+
+        InputUpdater.updateInputResource();
+        
 		System.out.println("Starting Analysis: " + new Timestamp(new java.util.Date().getTime()));
 		
 		MainEngine e = new MainEngine();

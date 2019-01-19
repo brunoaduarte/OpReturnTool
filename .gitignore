@@ -1,0 +1,8 @@
+
+*.prefs
+*.class
+.project
+.classpath
+target/*
+tokens/*
+src/main/resources/*.json

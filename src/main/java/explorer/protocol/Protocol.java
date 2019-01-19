@@ -6,6 +6,7 @@ public class Protocol {
 	public static final String COUNTERPARTY = "counterparty";
 	public static final String OPENASSETS = "openassets";
 	public static final String OMNI = "omni";
+	public static final String OMNI_TETHER = "omnitether";
 	public static final String FACTOM = "factom";
 	public static final String MONEGRAPH = "monegraph";
 	public static final String STAMPERY = "stampery";

@@ -9,6 +9,9 @@ public class Codes {
 	public static final String COUNTERPARTY_CODE1 = "434e545250525459";
 	public static final String OPENASSETS_CODE1 = "4f41";
 	public static final String OMNI_CODE1 = "6f6d6e69";
+	public static final String OMNI_CODE_TETHER = ".+6f6d6e69000000";
+	public static final String OMNI_CODE_TETHER_REGEX = ".+6f6d6e69000000[0-9]{2}0000001f.+";
+	public static final String OMNI_CODE_TETHER_REGEX_SPLITTER = ".+6f6d6e69000000[0-9]{2}0000001f";
 	public static final String FACTOM_CODE1 = "4661";
 	public static final String FACTOM_CODE2 = "466163746f6d2121";
 	public static final String FACTOM_CODE3 = "4641";
